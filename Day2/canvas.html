@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px dashed grey;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    var can
+    var ctx
+    window.addEventListener("DOMContentLoaded", () => {
+      can = document.getElementById('myCan')
+      ctx = can.getContext('2d')
+      drawPattern()
+    })
+
+    function drawPattern() {
+      ctx.lineWidth = 6
+      ctx.beginPath()
+      ctx.moveTo(200, 200)
+      ctx.lineTo(250, 220)
+      ctx.lineTo(300, 270)
+      ctx.moveTo(320, 320)
+      ctx.lineTo(320, 370)
+      ctx.lineTo(300, 420)
+
+      ctx.arc(150, 350, 50, 0, 4.2)
+      ctx.lineTo(220, 250)
+
+      ctx.strokeStyle = "red"
+      ctx.fill()
+      ctx.stroke()
+
+      ctx.beginPath()
+
+      ctx.moveTo(50, 50)
+      ctx.lineTo(150, 50)
+      ctx.lineTo(150, 150)
+      ctx.lineTo(50, 150)
+
+      ctx.strokeStyle = "blue"
+      ctx.fillStyle = "green"
+      ctx.lineWidth = 3
+      ctx.fill()
+      ctx.stroke()
+
+    }
+
+  </script>
+  <canvas id="myCan" width="500" height="500">You don't support canvas</canvas>
+</body>
+
+</html>
