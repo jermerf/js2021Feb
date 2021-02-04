@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function delays() {
+      setTimeout(() => {
+        console.log("Immediately!!!")
+      }, 10)
+      var sum = 0
+      for (var i = 0; i < 2000000000; i++) {
+        sum += i
+      }
+      console.log(sum)
+    }
+    function somethingElse() {
+      let li = document.createElement('li')
+      li.innerText = "Something else"
+      document.getElementById('content').appendChild(li)
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('startBtn').addEventListener('click', somethingElse)
+    })
+
+    function mathHandler(fn, steps) {
+      for (var i = 0; i < steps; i++) {
+        let li = document.createElement('li')
+        li.innerText = fn(i)
+        document.getElementById('content').appendChild(li)
+      }
+    }
+
+    $.get("/notes", res => {
+
+    })
+
+    function mathFunc() {
+      mathHandler(val => {
+        return val / 2
+      }, 10)
+    }
+
+    function square(num) {
+      return num * num
+    }
+
+    function unknownArgs(a, b) {
+      let type = typeof a
+      if (type === 'function') {
+        a()
+      } else if (type === 'number') {
+        console.log("a is a number, which squared is ", a * a)
+      } else {
+        console.log(`a is not a function, it's `, a)
+      }
+    }
+
+  </script>
+  <button onclick="delays()" id="startBtn">Start Delay</button>
+  <button onclick="somethingElse()">Something else</button>
+  <button onclick="mathFunc()">Do Math</button>
+  <ul id="content"></ul>
+</body>
+
+</html>

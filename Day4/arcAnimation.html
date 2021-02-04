@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var can = document.createElement('canvas')
+    can.width = 500
+    can.height = 500
+    can.style.border = "2px dashed red"
+    document.body.appendChild(can)
+
+    var ctx = can.getContext('2d')
+
+    var thet = 0
+    var thetSpace = 0
+
+    setInterval(() => {
+      ctx.clearRect(0, 0, can.width, can.height)
+      ctx.beginPath()
+      ctx.arc(100, 100, 100, 0 + thetSpace, 2 * Math.PI - thetSpace)
+      ctx.stroke()
+      thet += 0.2
+      thetSpace = 1 / 4 + Math.sin(thet) / 4
+    }, 50);
+  </script>
+</body>
+
+</html>

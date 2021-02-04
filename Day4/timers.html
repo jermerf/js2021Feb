@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var intervalCalls = 0
+    var intervalHandle = -1
+    var timeoutHandle = -1
+    function startInterval() {
+      intervalHandle = setInterval(function () {
+        intervalCalls++
+        let ul = document.getElementById('timerEvents')
+        let li = document.createElement('li')
+        li.innerText = intervalCalls
+        ul.appendChild(li)
+      }, 500)
+    }
+    function stopInterval() {
+      clearInterval(intervalHandle)
+    }
+
+    function startTimeout() {
+      timeoutHandle = setTimeout(function () {
+        let ul = document.getElementById('timerEvents')
+        let li = document.createElement('li')
+        li.innerText = "Timeout complete"
+        ul.appendChild(li)
+      }, 2000)
+    }
+    function stopTimeout() {
+      clearInterval(timeoutHandle)
+    }
+    function clearContent() {
+      document.getElementById('timerEvents').innerHTML = ''
+    }
+
+
+  </script>
+  <table>
+    <tr>
+      <td>
+        <ul id="timerEvents"></ul>
+      </td>
+      <td>
+        <button onclick="startInterval()">Start Interval</button>
+        <button onclick="stopInterval()">Stop Interval</button>
+        <button onclick="startTimeout()">Start Timeout</button>
+        <button onclick="stopTimeout()">Stop Timeout</button>
+        <button onclick="clearContent()">Clear</button>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>
