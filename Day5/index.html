@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+</head>
+
+<body>
+  &#x1f929;
+  <textarea id="content">This is a sentence</textarea>
+  <button onclick="runString('find cat')">Find Cat</button>
+  <button onclick="runString('replace cat')">Replace Cat</button>
+  <button onclick="runString('starts with cat')">starts with cat</button>
+  <button onclick="runString('match cat')">Match all "cat" 's</button>
+  <button onclick="runString('list words')">List words</button>
+  <button onclick="runString('superscript')">Second word is superscripted</button>
+  <div id="result"></div>
+  <script>
+    function runString(op) {
+      let content = document.getElementById('content').value
+      let resultDiv = document.getElementById('result')
+
+      switch (op) {
+        case "find cat":
+          resultDiv.innerText = content.indexOf("cat")
+          break
+        case "replace cat":
+          resultDiv.innerText = content.replace("cat", "---")
+          break
+        case "starts with cat":
+          resultDiv.innerText = content.startsWith("cat")
+          break
+        case "match cat":
+          let iterator = content.matchAll("cat")
+          let results = []
+          for (var result = iterator.next(); result.value; result = iterator.next()) {
+            results.push(result.map(obj => ({ value: obj.value, index: obj.value['index'] })))
+          }
+          resultDiv.innerText = JSON.stringify(results)
+          break
+        case "list words":
+          let parts = content.split(" ")
+          let strBuilder = ""
+          for (var p of parts) {
+            strBuilder += p + "\n"
+          }
+          resultDiv.innerHTML = strBuilder
+          break
+        case "superscript": {
+          let parts = content.split(" ")
+          let strBuilder = parts[0]
+          strBuilder += parts[1].sup()
+          resultDiv.innerHTML = strBuilder
+          break
+        }
+      }
+
+    }
+  </script>
+</body>
+
+</html>
