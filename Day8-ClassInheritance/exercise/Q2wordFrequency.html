@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    /*
+Godot's development was started by, Juan 'reduz' Linietsky and Ariel 'punto' Manzur in 2007.[17][18] Linietsky stated in a presentation that the name "Godot" was chosen due to its relation to Samuel Beckett's play Waiting for Godot, as it represents the never-ending wish of adding new features in the engine, which would get it closer to an exhaustive product, but never will.[19] In February 2014, the source code for Godot was released to the public on GitHub under the MIT License.[20]
+
+On 15 December 2014, Godot reached version 1.0, marking the first stable release and the addition of lightmapping, navmesh support, and more shaders.[21] Version 1.1 was released on 21 May 2015, adding improved auto-completion in the code editor, a visual shader editor, a new API to the operating system for managing screens and windows, a rewritten 2D engine, new 2D navigation polygon support, a much improved Blender Collada exporter, and a new dark theme.[22] The then-new 2D engine included shaders, materials, independent Z ordering per node, lights, shadows with polygonal occluders, normal mapping, and distance-field font support. Godot joined the Software Freedom Conservancy on 4 November 2015.[23]
+
+Godot 2.0 was released on 23 February 2016. New features included better scene instancing and inheritance, a new file system browser, multiple scene editing, and an enhanced debugger.[24][6] This was followed by version 2.1 in August 2016, which introduced an asset database, profiler, and plugin API.[25]
+
+On 22 June 2016, Godot received a $20,000 Mozilla Open Source Support (MOSS) “Mission Partners” award to be used to add WebSockets, WebAssembly and WebGL 2.0 support.[10] Later, with Miguel de Icaza's support, Godot received a $24,000 donation from Microsoft to implement C# as a scripting language in Godot.[26]
+
+Version 3.0 was released on 29 January 2018, adding a brand new PBR renderer implemented in OpenGL ES 3.0, virtual reality compatibility, and C# support (via Mono).[16] Version 3.0 also added the Bullet physics engine in addition to the engine's built-in 3D physics back end and was the first version of Godot to be included in Debian. Godot 3.1 was released on 13 March 2019, with the most notable features being the addition of statically typed GDScript, a script class system for GDScript, and an OpenGL ES 2.0 renderer for older devices and mobile devices.[27] Godot 3.2 was released on 29 January 2020, with the most notable features being massive documentation improvements, greatly improved C# support, and support for glTF 2.0 files.[28] The lead developer, Juan Linietsky, spent most of his time working on a separate Vulkan branch that would later be merged into master for 4.0,[29] so work on 3.2 was mostly done by other contributors. Work on 3.2 continues as a long-term support release,[28] including Godot 3.2.2 on 26 June 2020, a large patch release that added features such as OpenGL ES 2.0 batching and C# support for iOS.[30]
+
+On 3 February 2020, Godot received a $250,000 Epic Games award to improve graphics rendering and the engine's built-in game development language, GDScript.[31] On July 8, 2020, Juan Linietsky mentioned that the Epic Games award will be used to permanently hire himself and George (Marques) for 2 years in order to free donation funds for new purposes.[32]
+    */
+    function keyPressed(event) {
+      if (event.key == "Enter") {
+        var obj = {}
+        var text = event.target.value
+        var words = text.split(" ")
+        for (var w of words) {
+          if (obj[w]) {
+            obj[w]++
+          } else {
+            obj[w] = 1
+          }
+        }
+        var status = document.getElementById('status')
+        status.innerHTML = ""
+        for (var w in obj) {
+          var li = document.createElement('li')
+          li.innerHTML = `<span class="word">${w}</span> ${obj[w]}`
+          status.appendChild(li)
+        }
+      }
+    }
+  </script>
+  <style>
+    .word {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <input onkeydown="keyPressed(event)" />
+  <ul id="status"></ul>
+</body>
+
+</html>
