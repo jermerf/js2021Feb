@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    async function fakeAjax(path, data) {
+      return new Promise((res, rej) => {
+        setTimeout(() => res({ path, data }), 1500)
+      })
+    }
+
+    async function register() {
+      var username = document.getElementById('userbox')
+      var password = document.getElementById('passbox')
+      document.getElementById('status').style.display = "block"
+      document.getElementById('login-controls').style.display = "none"
+      let res = await fakeAjax("/register", { username, password })
+      document.getElementById('status').style.display = "none"
+      document.getElementById('restricted').style.display = "block"
+      console.log(res)
+    }
+
+    function registerJquery() {
+      var username = document.getElementById('userbox')
+      var password = document.getElementById('passbox')
+      document.getElementById('status').style.display = "block"
+      document.getElementById('login-controls').style.display = "none"
+      $.post("/register", { username, password }, res => {
+        document.getElementById('status').style.display = "none"
+        document.getElementById('restricted').style.display = "block"
+        console.log(res)
+        $.get("/list", res2 => {
+          console.log(res2)
+        })
+      })
+    }
+  </script>
+</head>
+
+<body>
+  <div id="status" style="display: none">Loading...</div>
+  <div id="login-controls">
+    <input id="userbox" value="tesla" />
+    <input id="passbox" type="password" value="secret" />
+    <button onclick="register()">Register</button>
+  </div>
+  <div id="restricted" style="display: none">
+    <h2>Secret Cat meeting</h2>
+    <ol>
+      <li>Destroy Dawgs!</li>
+      <li>Eat mice!</li>
+      <li>Eat computer mice!</li>
+    </ol>
+  </div>
+</body>
+
+</html>
