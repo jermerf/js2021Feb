@@ -1,0 +1,32 @@
+@font-face {
+  font-family: robo;
+  src: url("assets/Roboto-Thin.ttf")
+}
+*{
+  color: #fffcf1;
+  font-family: robo,sans-serif;
+}
+
+html, body{
+  margin: 0;
+  background-color: #333;
+}
+
+h1{
+  margin: 0;
+}
+a{
+  text-decoration: none;
+}
+
+main {
+  padding: 10px;
+}
+
+button {
+  padding: 2px 8px;
+  background-color: #575;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}

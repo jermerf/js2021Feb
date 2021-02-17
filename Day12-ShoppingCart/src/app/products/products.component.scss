@@ -1,0 +1,26 @@
+#product-flex{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.product {
+  margin: 2px;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #222;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+.product img {
+  max-width: 100%;
+}
+
+.product .title {
+  
+}
+.product .price {
+  font-weight: bold;
+}

@@ -1,0 +1,16 @@
+<div id="product-flex">
+  <div *ngFor="let p of products" class="product">
+    <div class="title">{{p.title}}</div>
+    <div class="rating">
+      <fa-icon [icon]="iconStar" *ngIf="p.rating >= 1"></fa-icon>
+      <fa-icon [icon]="iconStar" *ngIf="p.rating >= 2"></fa-icon>
+      <fa-icon [icon]="iconStar" *ngIf="p.rating >= 3"></fa-icon>
+      <fa-icon [icon]="iconStar" *ngIf="p.rating >= 4"></fa-icon>
+      <fa-icon [icon]="iconStar" *ngIf="p.rating >= 5"></fa-icon>
+    </div>
+    <div class="price">${{p.price}}</div>
+    <p>{{p.description}}</p>
+    <img [src]="'assets/img/products/' + p.imgSrc" />
+    <button (click)="shoppingService.addToCart(p)">Add <fa-icon [icon]="iconCartAdd"></fa-icon></button>
+  </div>
+</div>
