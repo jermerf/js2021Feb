@@ -1,27 +1,27 @@
-var grid = document.createElement('div')
-grid.classList.add("grid")
+const G_WIDTH = 10
+const G_HEIGHT = 10
 
-document.body.appendChild(grid)
+function getBlockWidth() {
+  return Math.floor(window.innerWidth / G_WIDTH)
+}
 
-const G_WIDTH = 12
-const G_HEIGHT = 12
-const BLOCK_HEIGHT = 30
-const BLOCK_WIDTH = (window.innerWidth - 50) / G_WIDTH
-
+function getBlockHeight() {
+  return Math.floor(window.innerHeight / G_HEIGHT)
+}
 const game = {
+  grid: document.createElement('div'),
+  styles: document.createElement('style'),
   score: 0,
   blocks: []
 }
-class Block {
 
+class Block {
   x
   y
   type = 0
   el = document.createElement('div')
   constructor(x, y) {
     this.el.addEventListener('click', blockClicked)
-    this.el.style.transition = "all 0.5s"
-    this.el.style.position = "absolute"
     this.move(x, y)
     this.resetType()
   }
@@ -39,33 +39,28 @@ class Block {
     this.update()
   }
   resetType() {
-    this.type = Math.floor(Math.random() * 6)
+    this.type = Math.floor(Math.random() * COLORS.length)
     this.update()
   }
   update() {
     // this.el.style.gridColumn = this.x + 1
-    // this.el.style.gridRow = this.y + 1 //transform = `translateX(${this.y*BLOCK_HEIGHT}px)`
-
-    this.el.style.minHeight = BLOCK_HEIGHT + "px"
-    this.el.style.minWidth = (window.innerWidth - 50) / G_WIDTH + "px"
-    this.el.style.top = this.y * BLOCK_HEIGHT + "px"
-    this.el.style.left = this.x * BLOCK_WIDTH + "px"
-    this.el.style.backgroundColor = typeToColor(this.type)
+    // this.el.style.gridRow = this.y + 1 //transform = `translateX(${this.y*getBlockWidth()}px)`
+    this.el.style.top = this.y * getBlockHeight() + "px"
+    this.el.style.left = this.x * getBlockWidth() + "px"
+    this.el.style.backgroundColor = COLORS[this.type]
     // this.el.innerText = `${this.x}, ${this.y}`
   }
 
 }
 
-
-for (let i = 0; i < G_WIDTH; i++) {
-  let row = []
-  game.blocks.push(row)
-  for (let j = 0; j < G_HEIGHT; j++) {
-    let block = new Block(i, j)
-    grid.appendChild(block.el)
-    row.push(block)
-  }
-}
+const COLORS = [
+  "#3355ee", //Blue
+  "#269646", //Green
+  "#d82236", //Red
+  "#ffe91a", //Yellow
+  "#aa55bb", //Purple
+  "#ff8800" //Orange
+]
 
 function replaceScoredBlocks(blocks) {
   for (let b of blocks) {
@@ -83,50 +78,40 @@ function replaceScoredBlocks(blocks) {
 }
 
 function scoreBlockColor(data) {
-  var scoreBlocks = [data] // []
   var searchBlocks = [data]
-  // console.log(data)
   for (let i = 0; i < searchBlocks.length; i++) {
     let b = searchBlocks[i]
     if (b.x - 1 >= 0) { //Left
       if (game.blocks[b.x - 1][b.y].type === b.type // Same type
-        && !scoreBlocks.find(el => el.x === b.x - 1 && el.y === b.y)
         && !searchBlocks.find(el => el.x === b.x - 1 && el.y === b.y)) {
-        scoreBlocks.push(game.blocks[b.x - 1][b.y])
         searchBlocks.push(game.blocks[b.x - 1][b.y])
       }
     }
     if (b.x + 1 < G_WIDTH) { //Right
       if (game.blocks[b.x + 1][b.y].type === b.type // Same type
-        && !scoreBlocks.find(el => el.x === b.x + 1 && el.y === b.y)
         && !searchBlocks.find(el => el.x === b.x + 1 && el.y === b.y)) {
-        scoreBlocks.push(game.blocks[b.x + 1][b.y])
         searchBlocks.push(game.blocks[b.x + 1][b.y])
       }
     }
     if (b.y - 1 >= 0) { //Top
       if (game.blocks[b.x][b.y - 1].type === b.type // Same type
-        && !scoreBlocks.find(el => el.x === b.x && el.y === b.y - 1)
         && !searchBlocks.find(el => el.x === b.x && el.y === b.y - 1)) {
-        scoreBlocks.push(game.blocks[b.x][b.y - 1])
         searchBlocks.push(game.blocks[b.x][b.y - 1])
       }
     }
     if (b.y + 1 < G_HEIGHT) { //Bottom
       if (game.blocks[b.x][b.y + 1].type === b.type // Same type
-        && !scoreBlocks.find(el => el.x === b.x && el.y === b.y + 1)
         && !searchBlocks.find(el => el.x === b.x && el.y === b.y + 1)) {
-        scoreBlocks.push(game.blocks[b.x][b.y + 1])
         searchBlocks.push(game.blocks[b.x][b.y + 1])
       }
     }
   }
-  if (scoreBlocks.length >= 3) {
-    game.score += scoreBlocks.length
-    replaceScoredBlocks(scoreBlocks)
+  if (searchBlocks.length >= 3) {
+    game.score += searchBlocks.length
+    replaceScoredBlocks(searchBlocks)
     console.log("Score", game.score)
   } else {
-    for (let b of scoreBlocks) {
+    for (let b of searchBlocks) {
       b.el.style.opacity = 0.5
       setTimeout(() => {
         b.el.style.opacity = 1
@@ -136,27 +121,86 @@ function scoreBlockColor(data) {
 }
 
 function blockClicked(event) {
-  var data = null
+  var block
   for (let i = 0; i < G_WIDTH; i++) {
-    data = game.blocks[i].find(block => block.el === event.target)
-    if (data) {
+    // Find block by matching to the click target
+    if (block = game.blocks[i].find(block => block.el === event.target))
+      break
+    /*
+    // The same thing but stretched out a bit
+    let row = game.blocks[i]
+    // Find block by matching to the click target
+    block = row.find(block => block.el === event.target) 
+    if(block){
       break
     }
+    */
   }
-  if (data) {
-    scoreBlockColor(data)
-  }
-}
-
-
-
-function typeToColor(type) {
-  switch (type) {
-    case 0: return "#3355ee" //Blue
-    case 1: return "#269646" //Green
-    case 2: return "#d82236" //Red
-    case 3: return "#ffe91a" //Yellow
-    case 4: return "#aa55bb" //Purple
-    case 5: return "#ff8800" //Orange
+  if (block) {
+    scoreBlockColor(block)
   }
 }
+
+// var autoClick = {
+//   color: 0,
+//   colorCount: 0
+// }
+// setInterval(() => {
+//   if (autoClick.colorCount++ % 1 === 0)
+//     autoClick.color = Math.floor(Math.random() * COLORS.length)
+//   for (let i = 0; i < 10; i++) {
+//     let ri = Math.floor(Math.random() * game.blocks.length)
+//     let rj = Math.floor(Math.random() * game.blocks[0].length)
+//     let block = game.blocks[ri][rj]
+//     if (block.type === autoClick.color)
+//       scoreBlockColor(block)
+//   }
+// }, 100)
+
+function resetStyles() {
+  while (game.styles.sheet.rules.length > 0) {
+    game.styles.sheet.removeRule(0)
+  }
+  game.styles.sheet.insertRule(`
+    div.grid > div {
+      transition: all 0.5s;
+      position: absolute;
+      width: ${getBlockWidth()}px;
+      height: ${getBlockHeight()}px;
+    }
+  `)
+}
+
+// Start the game when loaded
+document.addEventListener("DOMContentLoaded", () => {
+  document.head.appendChild(game.styles)
+  game.grid.classList.add("grid")
+  resetStyles()
+  window.addEventListener("resize", () => {
+    resetStyles()
+
+    for (let i = 0; i < G_WIDTH; i++)
+      for (let j = 0; j < G_HEIGHT; j++)
+        game.blocks[i][j].update()
+  })
+  document.body.style.overflow = "hidden"
+  document.body.style.margin = 0
+
+  // Create blocks
+  for (let i = 0; i < G_WIDTH; i++) {
+    let row = []
+    game.blocks.push(row)
+    for (let j = 0; j < G_HEIGHT; j++) {
+      let block = new Block(i, j)
+      game.grid.appendChild(block.el)
+      row.push(block)
+    }
+  }
+
+  // Adjust for resize
+
+  // Show grid
+  document.body.appendChild(game.grid)
+})
+
+
