@@ -1,5 +1,5 @@
-const G_WIDTH = 10
-const G_HEIGHT = 10
+const G_WIDTH = 30
+const G_HEIGHT = 20
 
 function getBlockWidth() {
   return Math.floor(window.innerWidth / G_WIDTH)
@@ -25,6 +25,7 @@ class Block {
     this.move(x, y)
     this.resetType()
   }
+
   move(x, y) {
     if (game.blocks[x] && game.blocks[x][y]) {
       let tmp = game.blocks[x][y]
@@ -77,6 +78,27 @@ function replaceScoredBlocks(blocks) {
   }
 }
 
+function blockClicked(event) {
+  var block
+  for (let i = 0; i < G_WIDTH; i++) {
+    // Find block by matching to the click target
+    if (block = game.blocks[i].find(block => block.el === event.target))
+      break
+    /*
+    // The same thing but stretched out a bit
+    let row = game.blocks[i]
+    // Find block by matching to the click target
+    block = row.find(block => block.el === event.target) 
+    if(block){
+      break
+    }
+    */
+  }
+  if (block) {
+    scoreBlockColor(block)
+  }
+}
+
 function scoreBlockColor(data) {
   var searchBlocks = [data]
   for (let i = 0; i < searchBlocks.length; i++) {
@@ -120,26 +142,6 @@ function scoreBlockColor(data) {
   }
 }
 
-function blockClicked(event) {
-  var block
-  for (let i = 0; i < G_WIDTH; i++) {
-    // Find block by matching to the click target
-    if (block = game.blocks[i].find(block => block.el === event.target))
-      break
-    /*
-    // The same thing but stretched out a bit
-    let row = game.blocks[i]
-    // Find block by matching to the click target
-    block = row.find(block => block.el === event.target) 
-    if(block){
-      break
-    }
-    */
-  }
-  if (block) {
-    scoreBlockColor(block)
-  }
-}
 
 // var autoClick = {
 //   color: 0,

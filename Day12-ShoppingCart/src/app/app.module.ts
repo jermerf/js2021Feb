@@ -8,6 +8,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { CartItemsComponent } from './cart-items/cart-items.component';
 import { ProductsComponent } from './products/products.component';
+import { RatingStarComponent } from './rating-star/rating-star.component';
+import { ColorCrushComponent } from './color-crush/color-crush.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { ProductsComponent } from './products/products.component';
     ToolbarComponent,
     FooterComponent,
     CartItemsComponent,
-    ProductsComponent
+    ProductsComponent,
+    RatingStarComponent,
+    ColorCrushComponent
   ],
   imports: [
     BrowserModule,

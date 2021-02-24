@@ -1,0 +1,21 @@
+<div class="rating">
+  <div class="starbacks">
+    <fa-icon [icon]="icon.full"></fa-icon>
+    <fa-icon [icon]="icon.full"></fa-icon>
+    <fa-icon [icon]="icon.full"></fa-icon>
+    <fa-icon [icon]="icon.full"></fa-icon>
+    <fa-icon [icon]="icon.full"></fa-icon>
+  </div>
+  <div class="stars">
+    <fa-icon [icon]="icon.half" *ngIf="stars >= 0.25 && stars < 1"></fa-icon>
+    <fa-icon [icon]="icon.full" *ngIf="stars >= 1"></fa-icon>
+    <fa-icon [icon]="icon.half" *ngIf="stars >= 1.25 && stars < 2"></fa-icon>
+    <fa-icon [icon]="icon.full" *ngIf="stars >= 2"></fa-icon>
+    <fa-icon [icon]="icon.half" *ngIf="stars >= 2.25 && stars < 3"></fa-icon>
+    <fa-icon [icon]="icon.full" *ngIf="stars >= 3"></fa-icon>
+    <fa-icon [icon]="icon.half" *ngIf="stars >= 3.25 && stars < 4"></fa-icon>
+    <fa-icon [icon]="icon.full" *ngIf="stars >= 4"></fa-icon>
+    <fa-icon [icon]="icon.half" *ngIf="stars >= 4.25 && stars < 5"></fa-icon>
+    <fa-icon [icon]="icon.full" *ngIf="stars >= 5"></fa-icon>
+  </div>
+</div>

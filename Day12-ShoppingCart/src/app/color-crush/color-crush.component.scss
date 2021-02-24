@@ -1,0 +1,10 @@
+div.grid {
+  width: 500px;
+  height: 500px;
+  position: relative;
+  display: inline-block;
+}
+div.grid > div {
+  transition: all 0.5s;
+  position: absolute;
+}

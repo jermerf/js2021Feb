@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-toolbar',
@@ -7,10 +6,14 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  iconCart = faShoppingCart
+  animatedStarRating = 0
   constructor() { }
 
   ngOnInit(): void {
+    setInterval(() => {
+      this.animatedStarRating = (this.animatedStarRating + 0.5) % 5.5
+
+    }, 100)
   }
 
 }

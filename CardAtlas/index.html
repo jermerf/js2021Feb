@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    table {
+      border: 2px solid grey;
+    }
+
+    td {
+      border: 1px solid grey;
+    }
+
+    table img {
+      width: 73px;
+      height: 98px;
+      object-fit: none;
+    }
+  </style>
+</head>
+
+<body>
+  <table id="myCardTable">
+  </table>
+  <script>
+
+    class Card {
+      rank
+      suit
+      img
+      constructor(i, j, img) {
+        this.rank = j + 1
+        this.suit = i
+        this.img = img
+      }
+
+    }
+
+    const gH = 4
+    const gW = 13
+    var table = document.getElementById('myCardTable')
+    var board = []
+    function setup() {
+      for (var i = 0; i < gH; i++) {
+        let tr = document.createElement('tr')
+        board[i] = []
+        for (var j = 0; j < gW; j++) {
+          let td = document.createElement('td')
+          let img = document.createElement('img')
+          img.onclick = cardClicked
+          img.src = "cards.png"
+          img.style.objectPosition = -(1 + 73 * j) + "px " + -(1 + 98 * i) + "px"
+          board[i][j] = new Card(i, j, img)
+          td.appendChild(img)
+          tr.appendChild(td)
+        }
+        table.appendChild(tr)
+      }
+    }
+
+    var firstCard = null
+    function cardClicked(ev) {
+      let card = null
+      for (var i = 0; i < gH; i++) {
+        card = board[i].find(el => el.img === ev.target)
+        if (card) break
+      }
+      if (firstCard) {
+        if (firstCard.rank == card.rank && firstCard != card) {
+          firstCard.img.remove()
+          card.img.remove()
+        }
+        firstCard = null
+      } else {
+        firstCard = card
+      }
+    }
+
+    function shuffle() {
+      for (var i = 0; i < gH; i++) {
+        for (var j = 0; j < gW; j++) {
+          let randi = Math.floor(Math.random() * gH)
+          let randj = Math.floor(Math.random() * gW)
+          let src = board[i][j]
+          let des = board[randi][randj]
+          let p1 = src.img.parentElement
+          let p2 = des.img.parentElement
+          board[i][j] = des
+          board[randi][randj] = src
+          p1.appendChild(des.img)
+          p2.appendChild(src.img)
+        }
+      }
+    }
+
+    setup()
+  </script>
+</body>
+
+</html>

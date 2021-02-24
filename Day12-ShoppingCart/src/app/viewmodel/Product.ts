@@ -14,4 +14,8 @@ export default class Product {
     this.rating = rating
     this.inStock = inStock
   }
+
+  get imgUrl(): string {
+    return `assets/img/products/${this.imgSrc}`
+  }
 }

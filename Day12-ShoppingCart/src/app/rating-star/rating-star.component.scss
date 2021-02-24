@@ -1,0 +1,18 @@
+.starbacks svg path {
+  color: #555;
+}
+
+.rating{
+  display: inline-block;
+  position: relative;
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.stars svg path {
+  color: gold;
+}

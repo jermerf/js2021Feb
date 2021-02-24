@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    document.body.style.backgroundColor = "white"
+    var can = document.createElement('canvas')
+    can.width = 500
+    can.height = 200
+    can.style.border = "2px dashed red"
+    document.body.appendChild(can)
+
+    var ctx = can.getContext('2d')
+
+
+    // Original minX 0
+    // Original minY 0
+    // Original maxX 500
+    // Original maxY 500
+
+    // Fits sine curvw
+    // minX -1
+    // minY -1
+    // maxX 1
+    // maxY 1
+
+    var lastPoint = null
+    var steps = 1000
+    function plot(fn, minX, minY, maxX, maxY, color = "black") {
+      for (var i = 0; i < steps; i++) {
+        var x = i / 10 + minX
+        var y = fn(x)
+        if (!lastPoint) {
+          lastPoint = { x, y: y }
+        }
+        ctx.strokeStyle = color
+        drawLineSegment(x, y, minX, minY, maxX, maxY)
+        lastPoint = { x, y: y }
+      }
+      lastPoint = null
+    }
+
+    function drawLineSegment(x, y, minX, minY, maxX, maxY) {
+      var scaleX = can.width / (maxX - minX)
+      var scaleY = can.height / (maxY - minY)
+
+      ctx.beginPath()
+      ctx.moveTo(scaleX * (lastPoint.x - minX), scaleY * (lastPoint.y - minY))
+      ctx.lineTo(scaleX * (x - minX), scaleY * (y - minY))
+      ctx.stroke()
+    }
+
+    plot(Math.sin, 0, -1, Math.PI * 2, 1, "blue")
+    plot(x => {
+      return (x + 4) * (x + 2) * (x - 1) * (x - 3) * (x - 4)
+    }, -10, -200, 10, 100)
+
+  </script>
+</body>
+
+</html>
