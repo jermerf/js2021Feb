@@ -1,0 +1,8 @@
+<div class="product">
+  <div class="title">{{p.title}}</div>
+  <rating-star [stars]="p.rating"></rating-star>
+  <div class="price">${{p.price}}</div>
+  <p>{{p.description}}</p>
+  <img [src]="p.imgUrl" />
+  <button (click)="addToCart(p)">Add <fa-icon [icon]="iconCartAdd"></fa-icon></button>
+</div>

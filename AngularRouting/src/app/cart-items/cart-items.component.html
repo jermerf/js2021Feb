@@ -1,0 +1,13 @@
+<a id="cart" href="#">
+  <fa-icon (click)="showCart = !showCart" [icon]="iconCart"></fa-icon>
+  <div id="cart-items" [class.visible]="showCart">
+    <div *ngFor="let p of cartItems" class="item">
+      <img [src]="p.imgUrl" />
+      <div>
+        <div>{{p.title}}</div>
+        <div>${{p.price}}</div>
+      </div>
+      <button (click)="shoppingService.removeFromCart(p)">X</button>
+    </div>
+  </div>
+</a>
